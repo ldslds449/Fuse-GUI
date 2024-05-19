@@ -257,7 +257,10 @@ reset_btn.addEventListener('click', function () {
     for (let i = 0; i < select_stats_checkbox.length; ++i) {
         select_stats_checkbox[i].checked = false;
     }
+    stats_count_relation.value = '==';
     stats_count.value = 0;
+    stats_min.value = 0;
+    stats_max.value = 99999;
 
     for (let i = 0; i < select_rarity_checkbox.length; ++i) {
         select_rarity_checkbox[i].checked = true;
