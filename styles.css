@@ -1,0 +1,205 @@
+/* styles.css */
+
+/* Add styles here to customize the appearance of your app */
+
+:root {
+    --hp-color: #FE8B72;
+    --def-color: #B4B4B4;
+    --str-color: #FED172;
+    --int-color: #88C9FA;
+    --dex-color: #BCF9A0;
+
+    --a-color: #ff6262;
+    --b-color: #ff925c;
+    --c-color: #ffdf6a;
+    --d-color: #a0ff9d;
+    --e-color: #91e9ff;
+    --f-color: #c38fff;
+}
+
+.btn-hp {
+    --bs-btn-color: var(--hp-color);
+    --bs-btn-border-color: var(--hp-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--hp-color);
+    --bs-btn-hover-border-color: var(--hp-color);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: var(--hp-color);
+    --bs-btn-active-border-color: var(--hp-color);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--hp-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--hp-color);
+    --bs-gradient: none
+}
+
+.btn-def {
+    --bs-btn-color: var(--def-color);
+    --bs-btn-border-color: var(--def-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--def-color);
+    --bs-btn-hover-border-color: var(--def-color);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: var(--def-color);
+    --bs-btn-active-border-color: var(--def-color);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--def-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--def-color);
+    --bs-gradient: none
+}
+
+.btn-str {
+    --bs-btn-color: var(--str-color);
+    --bs-btn-border-color: var(--str-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--str-color);
+    --bs-btn-hover-border-color: var(--str-color);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: var(--str-color);
+    --bs-btn-active-border-color: var(--str-color);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--str-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--str-color);
+    --bs-gradient: none
+}
+
+.btn-int {
+    --bs-btn-color: var(--int-color);
+    --bs-btn-border-color: var(--int-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--int-color);
+    --bs-btn-hover-border-color: var(--int-color);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: var(--int-color);
+    --bs-btn-active-border-color: var(--int-color);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--int-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--int-color);
+    --bs-gradient: none
+}
+
+.btn-dex {
+    --bs-btn-color: var(--dex-color);
+    --bs-btn-border-color: var(--dex-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--dex-color);
+    --bs-btn-hover-border-color: var(--dex-color);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: var(--dex-color);
+    --bs-btn-active-border-color: var(--dex-color);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--dex-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--dex-color);
+    --bs-gradient: none
+}
+
+.btn-a {
+    --bs-btn-color: var(--a-color);
+    --bs-btn-border-color: var(--a-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--a-color);
+    --bs-btn-hover-border-color: var(--a-color);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: var(--a-color);
+    --bs-btn-active-border-color: var(--a-color);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--a-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--a-color);
+    --bs-gradient: none
+}
+
+.btn-b {
+    --bs-btn-color: var(--b-color);
+    --bs-btn-border-color: var(--b-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--b-color);
+    --bs-btn-hover-border-color: var(--b-color);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: var(--b-color);
+    --bs-btn-active-border-color: var(--b-color);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--b-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--b-color);
+    --bs-gradient: none
+}
+
+.btn-c {
+    --bs-btn-color: var(--c-color);
+    --bs-btn-border-color: var(--c-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--c-color);
+    --bs-btn-hover-border-color: var(--c-color);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: var(--c-color);
+    --bs-btn-active-border-color: var(--c-color);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--c-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--c-color);
+    --bs-gradient: none
+}
+
+.btn-d {
+    --bs-btn-color: var(--d-color);
+    --bs-btn-border-color: var(--d-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--d-color);
+    --bs-btn-hover-border-color: var(--d-color);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: var(--d-color);
+    --bs-btn-active-border-color: var(--d-color);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--d-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--d-color);
+    --bs-gradient: none
+}
+
+.btn-e {
+    --bs-btn-color: var(--e-color);
+    --bs-btn-border-color: var(--e-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--e-color);
+    --bs-btn-hover-border-color: var(--e-color);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: var(--e-color);
+    --bs-btn-active-border-color: var(--e-color);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--e-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--e-color);
+    --bs-gradient: none
+}
+
+.btn-f {
+    --bs-btn-color: var(--f-color);
+    --bs-btn-border-color: var(--f-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--f-color);
+    --bs-btn-hover-border-color: var(--f-color);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: var(--f-color);
+    --bs-btn-active-border-color: var(--f-color);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--f-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--f-color);
+    --bs-gradient: none
+}

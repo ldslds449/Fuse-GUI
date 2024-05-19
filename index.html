@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+
+  <!-- ui -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./bootstrap.min.css">
+  <script type="module" src="./bootstrap.min.js"></script>
+
+  <link href="./styles.css" rel="stylesheet">
+
+  <title>Fuse GUI</title>
+</head>
+
+<body>
+
+  <div class="container-fluid" style="margin-top: 15px; margin-bottom: 15px;">
+    <div class="row row-cols-1">
+      <!-- load csv button -->
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Load CSV</label>
+        <input class="form-control" type="file" id="csv-input">
+      </div>
+
+      <!-- stats select -->
+      <div class="mb-3">
+        <label for="select-stats-btn-group" class="form-label">Stats</label>
+        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group" id="select-stats-btn-group">
+          <input type="checkbox" class="btn-check" id="select-hp" autocomplete="off">
+          <label class="btn btn-hp" for="select-hp">HP</label>
+
+          <input type="checkbox" class="btn-check" id="select-def" autocomplete="off">
+          <label class="btn btn-def" for="select-def">DEF</label>
+
+          <input type="checkbox" class="btn-check" id="select-str" autocomplete="off">
+          <label class="btn btn-str" for="select-str">STR</label>
+
+          <input type="checkbox" class="btn-check" id="select-int" autocomplete="off">
+          <label class="btn btn-int" for="select-int">INT</label>
+
+          <input type="checkbox" class="btn-check" id="select-dex" autocomplete="off">
+          <label class="btn btn-dex" for="select-dex">DEX</label>
+        </div>
+      </div>
+
+      <!-- stats count -->
+      <div class="mb-3">
+        <label for="stats-count" class="form-label">Stats Count</label>
+        <input type="number" class="form-control" id="stats-count" value="0">
+      </div>
+
+      <!-- stats maximum & minimum -->
+      <div class="row mb-3 align-items-center">
+        <div class="col-auto">
+          <label for="stats-min" class="form-label">Stats Minimum</label>
+          <input type="number" class="form-control" id="stats-min" value="0">
+        </div>
+        <div class="col-auto">
+          <label for="stats-max" class="form-label">Stats Maximum</label>
+          <input type="number" class="form-control" id="stats-max" value="99999">
+        </div>
+      </div>
+
+      <!-- rarity select -->
+      <div class="mb-3">
+        <label for="select-rarity-btn-group" class="form-label">Rarity</label>
+        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group"
+          id="select-rarity-btn-group">
+          <input type="checkbox" class="btn-check" id="select-a" autocomplete="off" checked>
+          <label class="btn btn-a" for="select-a">A</label>
+
+          <input type="checkbox" class="btn-check" id="select-b" autocomplete="off" checked>
+          <label class="btn btn-b" for="select-b">B</label>
+
+          <input type="checkbox" class="btn-check" id="select-c" autocomplete="off" checked>
+          <label class="btn btn-c" for="select-c">C</label>
+
+          <input type="checkbox" class="btn-check" id="select-d" autocomplete="off" checked>
+          <label class="btn btn-d" for="select-d">D</label>
+
+          <input type="checkbox" class="btn-check" id="select-e" autocomplete="off" checked>
+          <label class="btn btn-e" for="select-e">E</label>
+
+          <input type="checkbox" class="btn-check" id="select-f" autocomplete="off" checked>
+          <label class="btn btn-f" for="select-f">F</label>
+        </div>
+      </div>
+
+      <!-- submit & reset -->
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary" id="search-btn">Submit</button>
+          <button class="btn btn-secondary" id="reset-btn">Reset</button>
+        </div>
+      </div>
+
+      <!-- table -->
+      <table class="table" id="item-table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">rarity</th>
+            <th scope="col">rank</th>
+            <th scope="col">level</th>
+            <th scope="col">stats</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- You can also require other files to run in this process -->
+  <script src="./utils.js"></script>
+</body>
+
+</html>
