@@ -10,6 +10,7 @@ const csv_input = document.getElementById('csv-input');
 const item_table = document.getElementById('item-table');
 const search_btn = document.getElementById('search-btn');
 const reset_btn = document.getElementById('reset-btn');
+const row_count_label = document.getElementById('row-count-label');
 
 const select_hp = document.getElementById('select-hp');
 const select_def = document.getElementById('select-def');
@@ -151,6 +152,9 @@ function showTable(data) {
         }
         insertColumn(row, container);
     }
+
+    // row count
+    row_count_label.innerHTML = `Row count: ${data.length}`;
 }
 
 csv_input.addEventListener('change', (event) => {
