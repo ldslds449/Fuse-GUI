@@ -220,7 +220,6 @@ search_btn.addEventListener('click', function () {
         for (let i = 0; i < select_stats_checkbox.length; ++i) {
             if (select_stats_checkbox[i].checked) {
                 sum += row.stats.count[i];
-                if (row.stats.detail[i].length == 0) return false;
                 if (!row.stats.detail[i].every(
                     (x) => (target_min <= x) && (x <= target_max))
                 ) return false;
