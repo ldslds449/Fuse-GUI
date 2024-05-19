@@ -19,6 +19,7 @@ const select_dex = document.getElementById('select-dex');
 const select_stats_checkbox = [select_hp, select_def, select_str, select_int, select_dex];
 
 const stats_count = document.getElementById('stats-count');
+const stats_count_relation = document.getElementById('stats-count-relation');
 const stats_min = document.getElementById('stats-min');
 const stats_max = document.getElementById('stats-max');
 
@@ -225,7 +226,14 @@ search_btn.addEventListener('click', function () {
                 ) return false;
             }
         }
-        if (sum < target_value) return false;
+
+        // check relation
+        const relation = stats_count_relation.value;
+        if (relation == '==') {
+            if (sum != target_value) return false;
+        } else if (relation == '>=') {
+            if (sum < target_value) return false;
+        }
 
         // rarity
         const item_rarity = row.rarity.charCodeAt(0) - 'A'.charCodeAt(0);
