@@ -91,6 +91,7 @@ function sortTable(data) {
 
 function showTable(data) {
     let table_body = item_table.getElementsByTagName('tbody')[0];
+
     // clean all rows
     const empty_tbody = document.createElement('tbody');
     table_body.parentNode.replaceChild(empty_tbody, table_body);
@@ -136,7 +137,10 @@ function showTable(data) {
         let container = document.createElement('div');
         for (let j = 0; j < stats.data.length; ++j) {
             let stats_col = createColumn(stats.getShowString(j));
-            stats_col.style.color = `var(--${stats.data[j].name.toLowerCase()}-color)`;
+            stats_col.style.color =
+                select_stats_checkbox[STATS_INFO[stats.data[j].name]].checked ?
+                    `var(--${stats.data[j].name.toLowerCase()}-color)` :
+                    'var(--hide-color)';
             stats_col.style.marginLeft = '5px';
             stats_col.style.marginRight = '5px';
             stats_col.style.display = 'inline-block';

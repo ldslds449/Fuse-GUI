@@ -4,10 +4,12 @@
 
 :root {
     --hp-color: #FE8B72;
-    --def-color: #B4B4B4;
+    --def-color: #C58DE0;
     --str-color: #FED172;
     --int-color: #88C9FA;
     --dex-color: #BCF9A0;
+
+    --hide-color: #B4B4B4;
 
     --a-color: #ff6262;
     --b-color: #ff925c;
