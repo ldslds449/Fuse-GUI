@@ -14,6 +14,15 @@ const row_count_label = document.getElementById('row-count-label');
 
 const table_search_btn = document.getElementById('table-search-btn');
 const table_search_field = document.getElementById('table-search-field');
+const table_select_all_btn = document.getElementById('table-select-all-btn');
+const table_sell_select_btn = document.getElementById('table-sell-select-btn');
+const table_fuse_select_btn = document.getElementById('table-fuse-select-btn');
+
+const command_modal = document.getElementById('command-modal');
+const command_text = document.getElementById('command-text');
+
+const message_toast = document.getElementById('message-toast');
+const message_text = document.getElementById('message-text');
 
 const select_hp = document.getElementById('select-hp');
 const select_def = document.getElementById('select-def');
@@ -51,6 +60,8 @@ const STATS_INFO = {
 };
 
 var csv;  // original csv data
+var table;  // csv data after filtering
+var select_index = new Set();  // index location in csv data
 
 class Stats {
     data = new Array();
@@ -157,8 +168,9 @@ function showTable(data) {
         // level
         insertColumn(row, createColumn(data[i].level));
 
+        // stats
         const stats = data[i].stats;
-        let container = document.createElement('div');
+        const stats_container = document.createElement('div');
         for (let j = 0; j < stats.data.length; ++j) {
             let stats_col = createColumn(stats.getShowString(j));
             stats_col.style.color =
@@ -170,9 +182,42 @@ function showTable(data) {
             stats_col.style.display = 'inline-block';
             stats_col.style.width = '70px';
             stats_col.style.textAlign = 'right';
-            container.appendChild(stats_col);
+            stats_container.appendChild(stats_col);
         }
-        insertColumn(row, container);
+        insertColumn(row, stats_container);
+
+        // action
+        const action_container = document.createElement('div');
+        const select_btn = document.createElement('button');
+        const unselected_class = 'btn-outline-primary';
+        const selected_class = 'btn-outline-danger';
+        const unselected_text = 'Select';
+        const selected_text = 'Delete';
+        select_btn.type = 'button';
+        select_btn.id = `item-${data[i].index}-select-btn`;
+        select_btn.className = `btn btn-sm ${select_index.has(data[i].index) ? selected_class : unselected_class}`;
+        select_btn.innerText = select_index.has(data[i].index) ? selected_text : unselected_text;
+        select_btn.style.minWidth = '80px';
+        select_btn.setAttribute('data-index', String(data[i].index));
+        select_btn.toggleAttribute('data-selected', select_index.has(data[i].index));
+        select_btn.onclick = function (e) {
+            const target = e.target;
+            if (target.getAttribute('data-selected') != null) {
+                select_index.delete(parseInt(target.getAttribute('data-index')));
+                target.classList.remove(selected_class);
+                target.classList.add(unselected_class);
+                target.innerHTML = unselected_text;
+            } else {
+                select_index.add(parseInt(target.getAttribute('data-index')));
+                target.classList.remove(unselected_class);
+                target.classList.add(selected_class);
+                target.innerHTML = selected_text;
+            }
+            select_btn.toggleAttribute('data-selected');
+        }
+        action_container.style.display = 'inline-block';
+        action_container.appendChild(select_btn);
+        insertColumn(row, action_container);
     }
 
     // row count
@@ -216,6 +261,7 @@ csv_input.addEventListener('change', (event) => {
                 }
                 now += 1;
             }
+            element.index = i - 1;
             csv.push(element);
         }
 
@@ -237,11 +283,14 @@ search_btn.addEventListener('click', function () {
         return;
     }
 
+    // clear selected
+    select_index.clear();
+
     const target_value = parseInt(stats_count.value);
     const target_min = parseInt(stats_min.value);
     const target_max = parseInt(stats_max.value);
 
-    var table = csv.filter(function (row) {
+    table = csv.filter(function (row) {
         // stats
         let sum = 0;
         for (let i = 0; i < select_stats_checkbox.length; ++i) {
@@ -301,6 +350,11 @@ reset_btn.addEventListener('click', function () {
     }
 
     table_search_field.value = '';  // clear
+    select_index.clear();  // clear
+
+    if (table_select_all_btn.getAttribute('data-selected') != null) {
+        table_select_all_btn.click();
+    }
 
     search_btn.click();
 });
@@ -310,4 +364,82 @@ table_search_btn.addEventListener('click', function () {
         return;
     }
     search_btn.click();
+});
+
+table_select_all_btn.addEventListener('click', function () {
+    if (csv == undefined) {
+        return;
+    }
+
+    const selected = table_select_all_btn.getAttribute('data-selected') != null;
+
+    for (let i = 0; i < table.length; ++i) {
+        const btn = document.getElementById(`item-${table[i].index}-select-btn`);
+        if (selected) {
+            if (btn.getAttribute('data-selected') != null) {
+                btn.click();
+            }
+        } else {
+            if (btn.getAttribute('data-selected') == null) {
+                btn.click();
+            }
+        }
+    }
+
+    const unselected_class = 'btn-primary';
+    const selected_class = 'btn-danger';
+    const unselected_text = 'Select All';
+    const selected_text = 'Delete All';
+    if (table_select_all_btn.getAttribute('data-selected') != null) {
+        table_select_all_btn.classList.remove(selected_class);
+        table_select_all_btn.classList.add(unselected_class);
+        table_select_all_btn.innerHTML = unselected_text;
+    } else {
+        table_select_all_btn.classList.remove(unselected_class);
+        table_select_all_btn.classList.add(selected_class);
+        table_select_all_btn.innerHTML = selected_text;
+    }
+    table_select_all_btn.toggleAttribute('data-selected');
+});
+
+table_sell_select_btn.addEventListener('click', function () {
+    if (csv == undefined) {
+        return;
+    }
+
+    if (select_index.size == 0) {
+        message_text.innerText = 'You need to select a item';
+        const toast = new bootstrap.Toast(message_toast);
+        toast.show();
+        return;
+    }
+
+    const selected_ids = Array.from(select_index).map((idx) => csv[idx].id)
+    command_text.innerText = `$sell equipment ${selected_ids.join(',')}`;
+
+    const modal = new bootstrap.Modal(command_modal);
+    modal.show();
+});
+
+table_fuse_select_btn.addEventListener('click', function () {
+    if (csv == undefined) {
+        return;
+    }
+
+    if (select_index.size != 2) {
+        if (select_index.size > 2) {
+            message_text.innerText = 'You can only select 2 items';
+        } else {
+            message_text.innerText = 'You need to select 2 items';
+        }
+        const toast = new bootstrap.Toast(message_toast);
+        toast.show();
+        return;
+    }
+
+    const selected_ids = Array.from(select_index).map((idx) => csv[idx].id)
+    command_text.innerText = `$fuse item ${selected_ids.join(' ')}`;
+
+    const modal = new bootstrap.Modal(command_modal);
+    modal.show();
 });

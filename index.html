@@ -144,10 +144,10 @@
         <!-- submit & reset -->
         <div class="row mb-3 justify-content-start">
           <div class="col-auto">
-            <button class="btn btn-primary" id="search-btn">Search</button>
-          </div>
-          <div class="col-auto">
-            <button class="btn btn-secondary" id="reset-btn">Reset</button>
+            <div class="d-grid gap-2 d-md-block">
+              <button class="btn btn-primary" id="search-btn">Search</button>
+              <button class="btn btn-secondary" id="reset-btn">Reset</button>
+            </div>
           </div>
         </div>
 
@@ -175,6 +175,18 @@
       <div class="col-auto align-self-end">
         <button class="btn btn-outline-primary" id="table-search-btn">Search</button>
       </div>
+
+    </div>
+    <div class="row mb-3">
+      <div class="col align-self-start">
+        <div class="d-grid gap-2 d-md-block">
+          <button class="btn btn-success" id="table-sell-select-btn">Sell Selected Items</button>
+          <button class="btn btn-success" id="table-fuse-select-btn">Fuse Selected Items</button>
+        </div>
+      </div>
+      <div class="col-auto align-self-end">
+        <button class="btn btn-primary" id="table-select-all-btn" data-state="unselected">Select All</button>
+      </div>
     </div>
 
     <div class="row">
@@ -195,6 +207,40 @@
           <tbody>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- command modal -->
+  <div class="modal fade" id="command-modal" tabindex="-1" aria-labelledby="commandModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="commandModalLabel">Command</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row mb-3">
+              <label for="command-text" class="form-label">Command</label>
+              <textarea class="form-control" id="command-text" rows="5"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- message -->
+  <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+    <div class="toast align-items-center text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true" id="message-toast">
+      <div class="d-flex">
+        <div class="toast-body" id="message-text">
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
     </div>
   </div>
