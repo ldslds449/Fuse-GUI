@@ -32,6 +32,13 @@ const select_e = document.getElementById('select-e');
 const select_f = document.getElementById('select-f');
 const select_rarity_checkbox = [select_a, select_b, select_c, select_d, select_e, select_f];
 
+const select_rank_1 = document.getElementById('select-rank-1');
+const select_rank_2 = document.getElementById('select-rank-2');
+const select_rank_3 = document.getElementById('select-rank-3');
+const select_rank_4 = document.getElementById('select-rank-4');
+const select_rank_5 = document.getElementById('select-rank-5');
+const select_rank_checkbox = [select_rank_1, select_rank_2, select_rank_3, select_rank_4, select_rank_5];
+
 const STATS_INFO = {
     'HP': 0,
     'DEF': 1,
@@ -127,12 +134,25 @@ function showTable(data) {
         }
 
         const row = table_body.insertRow();
+
+        // id
         insertColumn(row, createColumn(data[i].id));
+        
+        // name
         insertColumn(row, createColumn(data[i].name));
+
+        // rarity
         let rarity_col = createColumn(data[i].rarity);
         rarity_col.style.color = `var(--${data[i].rarity.toLowerCase()}-color)`;
         insertColumn(row, rarity_col);
+
+        // rank
         insertColumn(row, createColumn(data[i].rank));
+        let rank_col = createColumn(data[i].rank);
+        rank_col.style.color = `var(--rank-${data[i].rank}-color)`;
+        insertColumn(row, rank_col);
+        
+        // level
         insertColumn(row, createColumn(data[i].level));
 
         const stats = data[i].stats;
@@ -243,6 +263,10 @@ search_btn.addEventListener('click', function () {
         const item_rarity = row.rarity.charCodeAt(0) - 'A'.charCodeAt(0);
         if (!select_rarity_checkbox[item_rarity].checked) return false;
 
+        // rank
+        const item_rank = parseInt(row.rank);
+        if (!select_rank_checkbox[item_rank-1].checked) return false;
+
         return true;
     });
 
@@ -264,6 +288,10 @@ reset_btn.addEventListener('click', function () {
 
     for (let i = 0; i < select_rarity_checkbox.length; ++i) {
         select_rarity_checkbox[i].checked = true;
+    }
+
+    for (let i = 0; i < select_rank_checkbox.length; ++i) {
+        select_rank_checkbox[i].checked = true;
     }
 
     search_btn.click();
