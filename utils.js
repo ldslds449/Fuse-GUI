@@ -147,7 +147,6 @@ function showTable(data) {
         insertColumn(row, rarity_col);
 
         // rank
-        insertColumn(row, createColumn(data[i].rank));
         let rank_col = createColumn(data[i].rank);
         rank_col.style.color = `var(--rank-${data[i].rank}-color)`;
         insertColumn(row, rank_col);
