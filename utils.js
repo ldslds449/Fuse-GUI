@@ -12,6 +12,9 @@ const search_btn = document.getElementById('search-btn');
 const reset_btn = document.getElementById('reset-btn');
 const row_count_label = document.getElementById('row-count-label');
 
+const table_search_btn = document.getElementById('table-search-btn');
+const table_search_field = document.getElementById('table-search-field');
+
 const select_hp = document.getElementById('select-hp');
 const select_def = document.getElementById('select-def');
 const select_str = document.getElementById('select-str');
@@ -137,7 +140,7 @@ function showTable(data) {
 
         // id
         insertColumn(row, createColumn(data[i].id));
-        
+
         // name
         insertColumn(row, createColumn(data[i].name));
 
@@ -150,7 +153,7 @@ function showTable(data) {
         let rank_col = createColumn(data[i].rank);
         rank_col.style.color = `var(--rank-${data[i].rank}-color)`;
         insertColumn(row, rank_col);
-        
+
         // level
         insertColumn(row, createColumn(data[i].level));
 
@@ -264,7 +267,11 @@ search_btn.addEventListener('click', function () {
 
         // rank
         const item_rank = parseInt(row.rank);
-        if (!select_rank_checkbox[item_rank-1].checked) return false;
+        if (!select_rank_checkbox[item_rank - 1].checked) return false;
+
+        // name
+        const target_pattern = table_search_field.value;
+        if (target_pattern.length > 0 && row.name.indexOf(target_pattern) == -1) return false;
 
         return true;
     });
@@ -293,5 +300,14 @@ reset_btn.addEventListener('click', function () {
         select_rank_checkbox[i].checked = true;
     }
 
+    table_search_field.value = '';  // clear
+
+    search_btn.click();
+});
+
+table_search_btn.addEventListener('click', function () {
+    if (csv == undefined) {
+        return;
+    }
     search_btn.click();
 });

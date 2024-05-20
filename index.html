@@ -20,152 +20,182 @@
 <body>
 
   <div class="container-fluid" style="margin-top: 15px; margin-bottom: 15px;">
-    <div class="row row-cols-1">
-      <!-- load csv button -->
-      <div class="row mb-3">
-        <div class="col-auto">
-          <label for="csv-input" class="col-form-label">Load CSV</label>
-        </div>
-        <div class="col-4">
-          <input class="form-control" type="file" id="csv-input">
-        </div>
-      </div>
-
-      <!-- stats select & stats count -->
-      <div class="row mb-3">
-        <div class="col-auto">
-          <label for="select-stats-btn-group" class="col-form-label">Stats</label>
-        </div>
-        <div class="col-auto">
-          <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group"
-            id="select-stats-btn-group">
-            <input type="checkbox" class="btn-check" id="select-hp" autocomplete="off">
-            <label class="btn btn-hp" for="select-hp">HP</label>
-
-            <input type="checkbox" class="btn-check" id="select-def" autocomplete="off">
-            <label class="btn btn-def" for="select-def">DEF</label>
-
-            <input type="checkbox" class="btn-check" id="select-str" autocomplete="off">
-            <label class="btn btn-str" for="select-str">STR</label>
-
-            <input type="checkbox" class="btn-check" id="select-int" autocomplete="off">
-            <label class="btn btn-int" for="select-int">INT</label>
-
-            <input type="checkbox" class="btn-check" id="select-dex" autocomplete="off">
-            <label class="btn btn-dex" for="select-dex">DEX</label>
+    <div class="row">
+      <div class="col">
+        <!-- load csv button -->
+        <div class="row mb-3">
+          <div class="col-auto">
+            <label for="csv-input" class="col-form-label">Load CSV</label>
+          </div>
+          <div class="col">
+            <input class="form-control" type="file" id="csv-input">
           </div>
         </div>
-        <div class="col-auto">
-          <label for="stats-count-relation" class="col-form-label">Count</label>
-        </div>
-        <div class="col-auto">
-          <div class="input-group">
-            <select class="form-select" id="stats-count-relation">
-              <option value="==" selected>Equal</option>
-              <option value=">=">Not less</option>
-            </select>
-            <input type="number" class="form-control" id="stats-count" value="0">
+
+        <!-- stats select -->
+        <div class="row mb-3">
+          <div class="col-auto">
+            <label for="select-stats-btn-group" class="col-form-label">Stats</label>
+          </div>
+          <div class="col-auto">
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group"
+              id="select-stats-btn-group">
+              <input type="checkbox" class="btn-check" id="select-hp" autocomplete="off">
+              <label class="btn btn-hp" for="select-hp">HP</label>
+
+              <input type="checkbox" class="btn-check" id="select-def" autocomplete="off">
+              <label class="btn btn-def" for="select-def">DEF</label>
+
+              <input type="checkbox" class="btn-check" id="select-str" autocomplete="off">
+              <label class="btn btn-str" for="select-str">STR</label>
+
+              <input type="checkbox" class="btn-check" id="select-int" autocomplete="off">
+              <label class="btn btn-int" for="select-int">INT</label>
+
+              <input type="checkbox" class="btn-check" id="select-dex" autocomplete="off">
+              <label class="btn btn-dex" for="select-dex">DEX</label>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- stats maximum & minimum -->
-      <div class="row mb-3 align-items-center">
-        <div class="col-auto">
-          <label for="stats-min" class="form-label">Stats Minimum Value</label>
-          <input type="number" class="form-control" id="stats-min" value="0">
-        </div>
-        <div class="col-auto">
-          <label for="stats-max" class="form-label">Stats Maximum Value</label>
-          <input type="number" class="form-control" id="stats-max" value="99999">
-        </div>
-      </div>
-
-      <!-- rarity select -->
-      <div class="row mb-3 align-items-center">
-        <div class="col-auto">
-          <label for="select-rarity-btn-group" class="col-form-label">Rarity</label>
-        </div>
-        <div class="col-auto">
-          <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group"
-            id="select-rarity-btn-group">
-            <input type="checkbox" class="btn-check" id="select-a" autocomplete="off" checked>
-            <label class="btn btn-a" for="select-a">A</label>
-
-            <input type="checkbox" class="btn-check" id="select-b" autocomplete="off" checked>
-            <label class="btn btn-b" for="select-b">B</label>
-
-            <input type="checkbox" class="btn-check" id="select-c" autocomplete="off" checked>
-            <label class="btn btn-c" for="select-c">C</label>
-
-            <input type="checkbox" class="btn-check" id="select-d" autocomplete="off" checked>
-            <label class="btn btn-d" for="select-d">D</label>
-
-            <input type="checkbox" class="btn-check" id="select-e" autocomplete="off" checked>
-            <label class="btn btn-e" for="select-e">E</label>
-
-            <input type="checkbox" class="btn-check" id="select-f" autocomplete="off" checked>
-            <label class="btn btn-f" for="select-f">F</label>
+        <!-- stats count -->
+        <div class="row mb-3">
+          <div class="col-auto">
+            <label for="stats-count-relation" class="col-form-label">Count</label>
+          </div>
+          <div class="col-auto">
+            <div class="input-group">
+              <select class="form-select" id="stats-count-relation">
+                <option value="==" selected>Equal</option>
+                <option value=">=">Not less</option>
+              </select>
+              <input type="number" class="form-control" id="stats-count" value="0">
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- rank select -->
-      <div class="row mb-3 align-items-center">
-        <div class="col-auto">
-          <label for="select-rank-btn-group" class="col-form-label">Rank</label>
-        </div>
-        <div class="col-auto">
-          <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group"
-            id="select-rank-btn-group">
-            <input type="checkbox" class="btn-check" id="select-rank-1" autocomplete="off" checked>
-            <label class="btn btn-rank-1" for="select-rank-1">1</label>
-
-            <input type="checkbox" class="btn-check" id="select-rank-2" autocomplete="off" checked>
-            <label class="btn btn-rank-2" for="select-rank-2">2</label>
-
-            <input type="checkbox" class="btn-check" id="select-rank-3" autocomplete="off" checked>
-            <label class="btn btn-rank-3" for="select-rank-3">3</label>
-
-            <input type="checkbox" class="btn-check" id="select-rank-4" autocomplete="off" checked>
-            <label class="btn btn-rank-4" for="select-rank-4">4</label>
-
-            <input type="checkbox" class="btn-check" id="select-rank-5" autocomplete="off" checked>
-            <label class="btn btn-rank-5" for="select-rank-5">5</label>
+        <!-- stats maximum & minimum -->
+        <div class="row mb-3 align-items-center">
+          <div class="col-auto">
+            <label for="stats-min" class="form-label">Stats Minimum Value</label>
+            <input type="number" class="form-control" id="stats-min" value="0">
+          </div>
+          <div class="col-auto">
+            <label for="stats-max" class="form-label">Stats Maximum Value</label>
+            <input type="number" class="form-control" id="stats-max" value="99999">
           </div>
         </div>
-      </div>
 
-      <!-- submit & reset -->
-      <div class="row mb-3">
-        <div class="col">
-          <button class="btn btn-primary" id="search-btn">Search</button>
-          <button class="btn btn-secondary" id="reset-btn">Reset</button>
+        <!-- rarity select -->
+        <div class="row mb-3 align-items-center">
+          <div class="col-auto">
+            <label for="select-rarity-btn-group" class="col-form-label">Rarity</label>
+          </div>
+          <div class="col-auto">
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group"
+              id="select-rarity-btn-group">
+              <input type="checkbox" class="btn-check" id="select-a" autocomplete="off" checked>
+              <label class="btn btn-a" for="select-a">A</label>
+
+              <input type="checkbox" class="btn-check" id="select-b" autocomplete="off" checked>
+              <label class="btn btn-b" for="select-b">B</label>
+
+              <input type="checkbox" class="btn-check" id="select-c" autocomplete="off" checked>
+              <label class="btn btn-c" for="select-c">C</label>
+
+              <input type="checkbox" class="btn-check" id="select-d" autocomplete="off" checked>
+              <label class="btn btn-d" for="select-d">D</label>
+
+              <input type="checkbox" class="btn-check" id="select-e" autocomplete="off" checked>
+              <label class="btn btn-e" for="select-e">E</label>
+
+              <input type="checkbox" class="btn-check" id="select-f" autocomplete="off" checked>
+              <label class="btn btn-f" for="select-f">F</label>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- row count -->
-      <div class="row mb-3">
-        <div class="col">
-          <p class="fw-normal" id="row-count-label">No data</p>
+        <!-- rank select -->
+        <div class="row mb-3 align-items-center">
+          <div class="col-auto">
+            <label for="select-rank-btn-group" class="col-form-label">Rank</label>
+          </div>
+          <div class="col-auto">
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group"
+              id="select-rank-btn-group">
+              <input type="checkbox" class="btn-check" id="select-rank-1" autocomplete="off" checked>
+              <label class="btn btn-rank-1" for="select-rank-1">1</label>
+
+              <input type="checkbox" class="btn-check" id="select-rank-2" autocomplete="off" checked>
+              <label class="btn btn-rank-2" for="select-rank-2">2</label>
+
+              <input type="checkbox" class="btn-check" id="select-rank-3" autocomplete="off" checked>
+              <label class="btn btn-rank-3" for="select-rank-3">3</label>
+
+              <input type="checkbox" class="btn-check" id="select-rank-4" autocomplete="off" checked>
+              <label class="btn btn-rank-4" for="select-rank-4">4</label>
+
+              <input type="checkbox" class="btn-check" id="select-rank-5" autocomplete="off" checked>
+              <label class="btn btn-rank-5" for="select-rank-5">5</label>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- table -->
-      <table class="table" id="item-table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Rarity</th>
-            <th scope="col">Rank</th>
-            <th scope="col">Level</th>
-            <th scope="col">Stats</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+        <!-- submit & reset -->
+        <div class="row mb-3 justify-content-start">
+          <div class="col-auto">
+            <button class="btn btn-primary" id="search-btn">Search</button>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-secondary" id="reset-btn">Reset</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="col">
+
+      </div>
+    </div>
+
+    <!-- divider -->
+    <div class="row">
+      <div class="col">
+        <hr class="hr" />
+      </div>
+    </div>
+
+    <!-- row count & search input -->
+    <div class="row mb-3">
+      <div class="col align-self-center">
+        <span class="align-baseline" id="row-count-label">Row count: 0</span>
+      </div>
+      <div class="col-auto align-self-end">
+        <input class="form-control" type="search" placeholder="Name" aria-label="Name" id="table-search-field">
+      </div>
+      <div class="col-auto align-self-end">
+        <button class="btn btn-outline-primary" id="table-search-btn">Search</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <!-- table -->
+        <table class="table" id="item-table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Rarity</th>
+              <th scope="col">Rank</th>
+              <th scope="col">Level</th>
+              <th scope="col">Stats</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
