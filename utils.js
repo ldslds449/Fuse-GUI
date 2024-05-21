@@ -114,6 +114,23 @@ function sortTable(data) {
         if (a.level != b.level) {
             return parseInt(b.level) - parseInt(a.level);
         }
+
+        let sum_a = 0, sum_b = 0;
+        for (let i = 0; i < select_stats_checkbox.length; ++i) {
+            if (select_stats_checkbox[i].checked) {
+                sum_a += a.stats.count[i];
+                sum_b += b.stats.count[i];
+            }
+        }
+        if (sum_a != sum_b) return sum_b - sum_a;
+
+        for (let i = 0; i < select_stats_checkbox.length; ++i) {
+            if (select_stats_checkbox[i].checked) {
+                if (a.stats.count[i] != b.stats.count[i]) {
+                    return b.stats.count[i] - a.stats.count[i];
+                }
+            }
+        }
         return parseInt(a.id) - parseInt(b.id);
     });
     return data;
