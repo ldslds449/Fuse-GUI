@@ -20,6 +20,8 @@ const table_fuse_select_btn = document.getElementById('table-fuse-select-btn');
 
 const command_modal = document.getElementById('command-modal');
 const command_text = document.getElementById('command-text');
+const command_close_btn = document.getElementById('command-close-btn');
+const command_copy_btn = document.getElementById('command-copy-btn');
 
 const message_toast = document.getElementById('message-toast');
 const message_text = document.getElementById('message-text');
@@ -224,6 +226,12 @@ function showTable(data) {
     row_count_label.innerHTML = `Row count: ${data.length}`;
 }
 
+function showToast(message) {
+    message_text.innerText = message;
+    const toast = new bootstrap.Toast(message_toast);
+    toast.show();
+}
+
 csv_input.addEventListener('change', (event) => {
     const file = event.target.files[0];
 
@@ -408,9 +416,7 @@ table_sell_select_btn.addEventListener('click', function () {
     }
 
     if (select_index.size == 0) {
-        message_text.innerText = 'You need to select a item';
-        const toast = new bootstrap.Toast(message_toast);
-        toast.show();
+        showToast('You need to select at least 1 item');
         return;
     }
 
@@ -428,12 +434,10 @@ table_fuse_select_btn.addEventListener('click', function () {
 
     if (select_index.size != 2) {
         if (select_index.size > 2) {
-            message_text.innerText = 'You can only select 2 items';
+            showToast('You can only select 2 items');
         } else {
-            message_text.innerText = 'You need to select 2 items';
+            showToast('You need to select 2 items');
         }
-        const toast = new bootstrap.Toast(message_toast);
-        toast.show();
         return;
     }
 
@@ -442,4 +446,13 @@ table_fuse_select_btn.addEventListener('click', function () {
 
     const modal = new bootstrap.Modal(command_modal);
     modal.show();
+});
+
+command_copy_btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(command_text.value).then(function () {
+        command_close_btn.click();
+    }, function (err) {
+        console.log(err);
+        showToast('Copy failed');
+    });
 });
