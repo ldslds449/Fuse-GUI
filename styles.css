@@ -23,6 +23,13 @@
     --rank-3-color: hsl(from var(--c-color) calc(h + 30) 70% l);
     --rank-4-color: hsl(from var(--b-color) calc(h + 30) 70% l);
     --rank-5-color: hsl(from var(--a-color) calc(h + 30) 70% l);
+
+    --table-height: 80vh;
+}
+
+#item-table-div {
+    height: var(--table-height);
+    width: 100%;
 }
 
 .btn-hp {
