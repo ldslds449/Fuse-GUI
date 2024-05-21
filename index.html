@@ -166,8 +166,11 @@
 
     <!-- row count & search input -->
     <div class="row mb-3">
-      <div class="col align-self-center">
+      <div class="col-auto align-self-center">
         <span class="align-baseline" id="row-count-label">Row count: 0</span>
+      </div>
+      <div class="col align-self-center">
+        <span class="align-baseline" id="select-count-label">Select count: 0</span>
       </div>
       <div class="col-auto align-self-end">
         <input class="form-control" type="search" placeholder="Name" aria-label="Name" id="table-search-field">
@@ -180,7 +183,7 @@
     <div class="row mb-3">
       <div class="col align-self-start">
         <div class="d-grid gap-2 d-md-block">
-          <button class="btn btn-success" id="table-sell-select-btn">Sell Selected Items</button>
+          <button class="btn btn-warning" id="table-sell-select-btn">Sell Selected Items</button>
           <button class="btn btn-success" id="table-fuse-select-btn">Fuse Selected Items</button>
         </div>
       </div>

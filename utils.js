@@ -10,7 +10,9 @@ const csv_input = document.getElementById('csv-input');
 const item_table = document.getElementById('item-table');
 const search_btn = document.getElementById('search-btn');
 const reset_btn = document.getElementById('reset-btn');
+
 const row_count_label = document.getElementById('row-count-label');
+const select_count_label = document.getElementById('select-count-label');
 
 const table_search_btn = document.getElementById('table-search-btn');
 const table_search_field = document.getElementById('table-search-field');
@@ -218,6 +220,7 @@ function showTable(data) {
                 target.innerHTML = selected_text;
             }
             select_btn.toggleAttribute('data-selected');
+            select_count_label.innerHTML = `Select count: ${select_index.size}`;
         }
         action_container.style.display = 'inline-block';
         action_container.appendChild(select_btn);
@@ -383,6 +386,7 @@ table_select_all_btn.addEventListener('click', function () {
             btn.click();
         }
     }
+    select_count_label.innerHTML = `Select count: ${table.length}`;
 });
 
 table_delete_all_btn.addEventListener('click', function () {
@@ -390,14 +394,13 @@ table_delete_all_btn.addEventListener('click', function () {
         return;
     }
 
-    const selected = table_select_all_btn.getAttribute('data-selected') != null;
-
     for (let i = 0; i < table.length; ++i) {
         const btn = document.getElementById(`item-${table[i].index}-select-btn`);
         if (btn.getAttribute('data-selected') != null) {
             btn.click();
         }
     }
+    select_count_label.innerHTML = `Select count: 0`;
 });
 
 table_sell_select_btn.addEventListener('click', function () {
