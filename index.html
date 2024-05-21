@@ -185,7 +185,10 @@
         </div>
       </div>
       <div class="col-auto align-self-end">
-        <button class="btn btn-primary" id="table-select-all-btn" data-state="unselected">Select All</button>
+        <div class="d-grid gap-2 d-md-block">
+          <button class="btn btn-primary" id="table-select-all-btn">Select All</button>
+          <button class="btn btn-danger" id="table-delete-all-btn">Delete All</button>
+        </div>
       </div>
     </div>
 
@@ -237,7 +240,8 @@
 
   <!-- message -->
   <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
-    <div class="toast align-items-center text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true" id="message-toast">
+    <div class="toast align-items-center text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true"
+      id="message-toast">
       <div class="d-flex">
         <div class="toast-body" id="message-text">
         </div>

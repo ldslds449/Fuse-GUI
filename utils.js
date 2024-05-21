@@ -14,9 +14,11 @@ const row_count_label = document.getElementById('row-count-label');
 
 const table_search_btn = document.getElementById('table-search-btn');
 const table_search_field = document.getElementById('table-search-field');
-const table_select_all_btn = document.getElementById('table-select-all-btn');
 const table_sell_select_btn = document.getElementById('table-sell-select-btn');
 const table_fuse_select_btn = document.getElementById('table-fuse-select-btn');
+
+const table_select_all_btn = document.getElementById('table-select-all-btn');
+const table_delete_all_btn = document.getElementById('table-delete-all-btn');
 
 const command_modal = document.getElementById('command-modal');
 const command_text = document.getElementById('command-text');
@@ -360,10 +362,6 @@ reset_btn.addEventListener('click', function () {
     table_search_field.value = '';  // clear
     select_index.clear();  // clear
 
-    if (table_select_all_btn.getAttribute('data-selected') != null) {
-        table_select_all_btn.click();
-    }
-
     search_btn.click();
 });
 
@@ -379,35 +377,27 @@ table_select_all_btn.addEventListener('click', function () {
         return;
     }
 
+    for (let i = 0; i < table.length; ++i) {
+        const btn = document.getElementById(`item-${table[i].index}-select-btn`);
+        if (btn.getAttribute('data-selected') == null) {
+            btn.click();
+        }
+    }
+});
+
+table_delete_all_btn.addEventListener('click', function () {
+    if (csv == undefined) {
+        return;
+    }
+
     const selected = table_select_all_btn.getAttribute('data-selected') != null;
 
     for (let i = 0; i < table.length; ++i) {
         const btn = document.getElementById(`item-${table[i].index}-select-btn`);
-        if (selected) {
-            if (btn.getAttribute('data-selected') != null) {
-                btn.click();
-            }
-        } else {
-            if (btn.getAttribute('data-selected') == null) {
-                btn.click();
-            }
+        if (btn.getAttribute('data-selected') != null) {
+            btn.click();
         }
     }
-
-    const unselected_class = 'btn-primary';
-    const selected_class = 'btn-danger';
-    const unselected_text = 'Select All';
-    const selected_text = 'Delete All';
-    if (table_select_all_btn.getAttribute('data-selected') != null) {
-        table_select_all_btn.classList.remove(selected_class);
-        table_select_all_btn.classList.add(unselected_class);
-        table_select_all_btn.innerHTML = unselected_text;
-    } else {
-        table_select_all_btn.classList.remove(unselected_class);
-        table_select_all_btn.classList.add(selected_class);
-        table_select_all_btn.innerHTML = selected_text;
-    }
-    table_select_all_btn.toggleAttribute('data-selected');
 });
 
 table_sell_select_btn.addEventListener('click', function () {
