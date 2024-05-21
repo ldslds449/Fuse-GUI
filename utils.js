@@ -13,12 +13,14 @@ const reset_btn = document.getElementById('reset-btn');
 
 const row_count_label = document.getElementById('row-count-label');
 const select_count_label = document.getElementById('select-count-label');
+const hide_count_label = document.getElementById('hide-count-label');
 
 const table_search_btn = document.getElementById('table-search-btn');
 const table_search_field = document.getElementById('table-search-field');
 const table_sell_select_btn = document.getElementById('table-sell-select-btn');
 const table_fuse_select_btn = document.getElementById('table-fuse-select-btn');
 
+const table_show_all_btn = document.getElementById('table-show-all-btn');
 const table_select_all_btn = document.getElementById('table-select-all-btn');
 const table_delete_all_btn = document.getElementById('table-delete-all-btn');
 
@@ -26,7 +28,7 @@ const command_modal = document.getElementById('command-modal');
 const command_text = document.getElementById('command-text');
 const command_close_btn = document.getElementById('command-close-btn');
 const command_copy_btn = document.getElementById('command-copy-btn');
-const command_auto_delete_checkbox = document.getElementById('command-auto-delete-checkbox');
+const command_auto_hide_checkbox = document.getElementById('command-auto-hide-checkbox');
 
 const message_toast = document.getElementById('message-toast');
 const message_text = document.getElementById('message-text');
@@ -69,6 +71,7 @@ const STATS_INFO = {
 var csv;  // original csv data
 var table;  // csv data after filtering
 var select_index = new Set();  // index location in csv data
+var hide_index = new Set();  // index location in csv data
 
 class Stats {
     data = new Array();
@@ -217,41 +220,116 @@ function showTable(data) {
 
         // action
         const action_container = document.createElement('div');
-        const select_btn = document.createElement('button');
-        const unselected_class = 'btn-outline-primary';
-        const selected_class = 'btn-outline-danger';
-        const unselected_text = 'Select';
-        const selected_text = 'Delete';
-        select_btn.type = 'button';
-        select_btn.id = `item-${data[i].index}-select-btn`;
-        select_btn.className = `btn btn-sm ${select_index.has(data[i].index) ? selected_class : unselected_class}`;
-        select_btn.innerText = select_index.has(data[i].index) ? selected_text : unselected_text;
-        select_btn.style.minWidth = '80px';
-        select_btn.setAttribute('data-index', String(data[i].index));
-        select_btn.toggleAttribute('data-selected', select_index.has(data[i].index));
-        select_btn.onclick = function (e) {
-            const target = e.target;
-            if (target.getAttribute('data-selected') != null) {
-                select_index.delete(parseInt(target.getAttribute('data-index')));
-                target.classList.remove(selected_class);
-                target.classList.add(unselected_class);
-                target.innerHTML = unselected_text;
-            } else {
-                select_index.add(parseInt(target.getAttribute('data-index')));
-                target.classList.remove(unselected_class);
-                target.classList.add(selected_class);
-                target.innerHTML = selected_text;
+        const action_row_div = document.createElement('div');
+        action_container.className = 'container-fluid';
+        action_row_div.className = 'row gx-2';
+        {
+            const select_btn = document.createElement('button');
+            const unselected_class = 'btn-outline-primary';
+            const selected_class = 'btn-outline-danger';
+            const unselected_text = 'Select';
+            const selected_text = 'Delete';
+            select_btn.type = 'button';
+            select_btn.id = `item-${data[i].index}-select-btn`;
+            select_btn.className = `btn btn-sm ${select_index.has(data[i].index) ? selected_class : unselected_class}`;
+            select_btn.innerText = select_index.has(data[i].index) ? selected_text : unselected_text;
+            select_btn.style.minWidth = '80px';
+            select_btn.setAttribute('data-index', String(data[i].index));
+            select_btn.toggleAttribute('data-selected', select_index.has(data[i].index));
+            select_btn.onclick = function (e) {
+                const target = e.target;
+                if (target.getAttribute('data-selected') != null) {
+                    select_index.delete(parseInt(target.getAttribute('data-index')));
+                    target.classList.remove(selected_class);
+                    target.classList.add(unselected_class);
+                    target.innerHTML = unselected_text;
+                } else {
+                    select_index.add(parseInt(target.getAttribute('data-index')));
+                    target.classList.remove(unselected_class);
+                    target.classList.add(selected_class);
+                    target.innerHTML = selected_text;
+                }
+                select_btn.toggleAttribute('data-selected');
+                select_count_label.innerHTML = `Select count: ${select_index.size}`;
             }
-            select_btn.toggleAttribute('data-selected');
-            select_count_label.innerHTML = `Select count: ${select_index.size}`;
+
+            const action_col_div = document.createElement('div');
+            action_col_div.className = 'col-auto';
+            action_col_div.appendChild(select_btn);
+            action_row_div.appendChild(action_col_div);
         }
-        action_container.style.display = 'inline-block';
-        action_container.appendChild(select_btn);
+        {
+            const hide_btn = document.createElement('button');
+            hide_btn.type = 'button';
+            hide_btn.id = `item-${data[i].index}-hide-btn`;
+            hide_btn.className = `btn btn-sm btn-outline-warning`;
+            hide_btn.innerText = 'Hide';
+            hide_btn.style.minWidth = '80px';
+            hide_btn.onclick = function (e) {
+                hide_index.add(data[i].index);
+                select_index.delete(data[i].index);
+                table_body.removeChild(row);
+                hide_count_label.innerText = `Hide count: ${hide_index.size}`;
+                row_count_label.innerText = `Row count: ${data.length - hide_index.size}`;
+            }
+
+            const action_col_div = document.createElement('div');
+            action_col_div.className = 'col-auto';
+            action_col_div.appendChild(hide_btn);
+            action_row_div.appendChild(action_col_div);
+        }
+        action_container.appendChild(action_row_div);
         insertColumn(row, action_container);
     }
 
     // row count
     row_count_label.innerHTML = `Row count: ${data.length}`;
+}
+
+function applyFilter() {
+    const target_value = parseInt(stats_count.value);
+    const target_min = parseInt(stats_min.value);
+    const target_max = parseInt(stats_max.value);
+
+    table = csv.filter(function (row) {
+        // stats
+        let sum = 0;
+        for (let i = 0; i < select_stats_checkbox.length; ++i) {
+            if (select_stats_checkbox[i].checked) {
+                sum += row.stats.count[i];
+                if (!row.stats.detail[i].every(
+                    (x) => (target_min <= x) && (x <= target_max))
+                ) return false;
+            }
+        }
+
+        // check relation
+        const relation = stats_count_relation.value;
+        if (relation == '==') {
+            if (sum != target_value) return false;
+        } else if (relation == '>=') {
+            if (sum < target_value) return false;
+        }
+
+        // rarity
+        const item_rarity = row.rarity.charCodeAt(0) - 'A'.charCodeAt(0);
+        if (!select_rarity_checkbox[item_rarity].checked) return false;
+
+        // rank
+        const item_rank = parseInt(row.rank);
+        if (!select_rank_checkbox[item_rank - 1].checked) return false;
+
+        // name
+        const target_pattern = table_search_field.value;
+        if (target_pattern.length > 0 && row.name.indexOf(target_pattern) == -1) return false;
+
+        // hide
+        if (hide_index.has(row.index)) return false;
+
+        return true;
+    });
+
+    showTable(table);
 }
 
 function showToast(message) {
@@ -309,7 +387,7 @@ csv_input.addEventListener('change', (event) => {
         window.csv = csv;
 
         // draw table
-        search_btn.click();
+        applyFilter();
     };
     reader.readAsText(file);
 });
@@ -321,47 +399,9 @@ search_btn.addEventListener('click', function () {
 
     // clear selected
     select_index.clear();
+    hide_count_label.innerText = `Hide count: 0`;
 
-    const target_value = parseInt(stats_count.value);
-    const target_min = parseInt(stats_min.value);
-    const target_max = parseInt(stats_max.value);
-
-    table = csv.filter(function (row) {
-        // stats
-        let sum = 0;
-        for (let i = 0; i < select_stats_checkbox.length; ++i) {
-            if (select_stats_checkbox[i].checked) {
-                sum += row.stats.count[i];
-                if (!row.stats.detail[i].every(
-                    (x) => (target_min <= x) && (x <= target_max))
-                ) return false;
-            }
-        }
-
-        // check relation
-        const relation = stats_count_relation.value;
-        if (relation == '==') {
-            if (sum != target_value) return false;
-        } else if (relation == '>=') {
-            if (sum < target_value) return false;
-        }
-
-        // rarity
-        const item_rarity = row.rarity.charCodeAt(0) - 'A'.charCodeAt(0);
-        if (!select_rarity_checkbox[item_rarity].checked) return false;
-
-        // rank
-        const item_rank = parseInt(row.rank);
-        if (!select_rank_checkbox[item_rank - 1].checked) return false;
-
-        // name
-        const target_pattern = table_search_field.value;
-        if (target_pattern.length > 0 && row.name.indexOf(target_pattern) == -1) return false;
-
-        return true;
-    });
-
-    showTable(table);
+    applyFilter();
 });
 
 reset_btn.addEventListener('click', function () {
@@ -387,15 +427,28 @@ reset_btn.addEventListener('click', function () {
 
     table_search_field.value = '';  // clear
     select_index.clear();  // clear
+    hide_index.clear();
 
-    search_btn.click();
+    hide_count_label.innerText = `Hide count: 0`;
+
+    applyFilter();
 });
 
 table_search_btn.addEventListener('click', function () {
     if (csv == undefined) {
         return;
     }
-    search_btn.click();
+    applyFilter();
+});
+
+table_show_all_btn.addEventListener('click', function () {
+    if (csv == undefined) {
+        return;
+    }
+
+    hide_index.clear();
+    hide_count_label.innerText = 'Hide count: 0';
+    applyFilter();
 });
 
 table_select_all_btn.addEventListener('click', function () {
@@ -477,8 +530,12 @@ table_fuse_select_btn.addEventListener('click', function () {
 
 command_copy_btn.addEventListener('click', function () {
     navigator.clipboard.writeText(command_text.value).then(function () {
-        if (command_auto_delete_checkbox.checked) {
-            table_delete_all_btn.click();
+        if (command_auto_hide_checkbox.checked) {
+            const select_index_arr = Array.from(select_index);
+            for (let i = 0; i < select_index_arr.length; ++i) {
+                const hide_btn = document.getElementById(`item-${select_index_arr[i]}-hide-btn`);
+                hide_btn.click();
+            }
         }
         command_close_btn.click();
     }, function (err) {
