@@ -435,7 +435,18 @@ table_fuse_select_btn.addEventListener('click', function () {
         return;
     }
 
-    const selected_ids = Array.from(select_index).map((idx) => csv[idx].id)
+    const select_index_arr = Array.from(select_index);
+    const select_items = select_index_arr.map((idx) => csv[idx]);
+
+    if ((select_items[0].name != select_items[1].name) ||
+        (select_items[0].rarity != select_items[1].rarity) ||
+        (select_items[0].rank != select_items[1].rank) ||
+        (select_items[0].rank == '5')) {
+        showToast('Selected items can not be fused');
+        return;
+    }
+
+    const selected_ids = select_index_arr.map((idx) => csv[idx].id)
     command_text.innerText = `$fuse item ${selected_ids.join(' ')}`;
 
     const modal = new bootstrap.Modal(command_modal);
