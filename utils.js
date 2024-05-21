@@ -26,6 +26,7 @@ const command_modal = document.getElementById('command-modal');
 const command_text = document.getElementById('command-text');
 const command_close_btn = document.getElementById('command-close-btn');
 const command_copy_btn = document.getElementById('command-copy-btn');
+const command_auto_delete_checkbox = document.getElementById('command-auto-delete-checkbox');
 
 const message_toast = document.getElementById('message-toast');
 const message_text = document.getElementById('message-text');
@@ -443,6 +444,9 @@ table_fuse_select_btn.addEventListener('click', function () {
 
 command_copy_btn.addEventListener('click', function () {
     navigator.clipboard.writeText(command_text.value).then(function () {
+        if (command_auto_delete_checkbox.checked) {
+            table_delete_all_btn.click();
+        }
         command_close_btn.click();
     }, function (err) {
         console.log(err);
