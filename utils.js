@@ -93,10 +93,8 @@ class Stats {
             this.total[STATS_INFO[name]] += value;
             this.detail[STATS_INFO[name]].push(value);
         }
-    }
-
-    getShowString(idx) {
-        return `${this.data[idx].name}:${this.data[idx].value}`;
+        // sort stat by name
+        this.data.sort((a, b) => STATS_INFO[a.name] - STATS_INFO[b.name]);
     }
 };
 
@@ -195,11 +193,18 @@ function showTable(data) {
         // stats
         const stats = data[i].stats;
         const stats_container = document.createElement('div');
-        for (let j = 0; j < stats.data.length; ++j) {
-            let stats_col = createColumn(stats.getShowString(j));
+
+        const ordered_stats_data = Array.from(stats.data);
+        ordered_stats_data.sort(function (a, b) {
+            return Number(select_stats_checkbox[STATS_INFO[b.name]].checked) -
+                Number(select_stats_checkbox[STATS_INFO[a.name]].checked);
+        });
+
+        for (let j = 0; j < ordered_stats_data.length; ++j) {
+            let stats_col = createColumn(`${ordered_stats_data[j].name}:${ordered_stats_data[j].value}`);
             stats_col.style.color =
-                select_stats_checkbox[STATS_INFO[stats.data[j].name]].checked ?
-                    `var(--${stats.data[j].name.toLowerCase()}-color)` :
+                select_stats_checkbox[STATS_INFO[ordered_stats_data[j].name]].checked ?
+                    `var(--${ordered_stats_data[j].name.toLowerCase()}-color)` :
                     'var(--hide-color)';
             stats_col.style.marginLeft = '5px';
             stats_col.style.marginRight = '5px';
