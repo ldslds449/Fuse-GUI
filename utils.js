@@ -146,7 +146,7 @@ function showTable(data) {
     table_body = empty_tbody;
 
     data = sortTable(data);
-    console.log(data);
+    // console.log(data);
 
     let cur_row_color = 'var(--bs-table-color)';
     let cur_row_bg = 'var(--bs-table-bg)';
@@ -309,6 +309,8 @@ function applyFilter() {
             if (sum != target_value) return false;
         } else if (relation == '>=') {
             if (sum < target_value) return false;
+        } else if (relation == '<=') {
+            if (sum > target_value) return false;
         }
 
         // rarity
