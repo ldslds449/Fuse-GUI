@@ -333,8 +333,19 @@ function applyFilter() {
     showTable(table);
 }
 
-function showToast(message) {
+function showToast(message, danger) {
     message_text.innerText = message;
+
+    const danger_class = 'text-bg-danger';
+    const success_class = 'text-bg-success';
+    if (danger) {
+        message_toast.classList.remove(success_class);
+        message_toast.classList.add(danger_class);
+    } else {
+        message_toast.classList.remove(danger_class);
+        message_toast.classList.add(success_class);
+    }
+
     const toast = new bootstrap.Toast(message_toast);
     toast.show();
 }
@@ -355,9 +366,109 @@ function updateHideValue() {
     hide_count_label.innerText = `Hide count: ${hide_index.size}`;
 }
 
+function getSellCommand() {
+    if (select_index.size == 0) {
+        return {
+            success: false,
+            error_message: 'You need to select at least 1 item',
+            command: ''
+        };
+    }
+
+    const selected_ids = Array.from(select_index).map((idx) => csv[idx].id);
+    return {
+        success: true,
+        error_message: '',
+        command: `$sell equipment ${selected_ids.join(',')}`
+    };
+}
+
+function getFuseCommand() {
+    if (select_index.size != 2) {
+        if (select_index.size > 2) {
+            return {
+                success: false,
+                error_message: 'You can only select 2 items',
+                command: ''
+            };
+        } else {
+            return {
+                success: false,
+                error_message: 'You need to select 2 items',
+                command: ''
+            };
+        }
+    }
+
+    const select_index_arr = Array.from(select_index);
+    const select_items = select_index_arr.map((idx) => csv[idx]);
+
+    if ((select_items[0].name != select_items[1].name) ||
+        (select_items[0].rarity != select_items[1].rarity) ||
+        (select_items[0].rank != select_items[1].rank) ||
+        (select_items[0].rank == '5')) {
+        return {
+            success: false,
+            error_message: 'Selected items can not be fused',
+            command: ''
+        };
+    }
+
+    const selected_ids = select_index_arr.map((idx) => csv[idx].id);
+    return {
+        success: true,
+        error_message: '',
+        command: `$fuse item ${selected_ids.join(' ')}`
+    };
+}
+
+function hideSelected() {
+    const select_index_arr = Array.from(select_index);
+    for (let i = 0; i < select_index_arr.length; ++i) {
+        const hide_btn = document.getElementById(`item-${select_index_arr[i]}-hide-btn`);
+        hide_btn.click();
+    }
+}
+
 document.addEventListener('keypress', function onPress(event) {
     if (event.key === 'Enter') {
         search_btn.click();
+    }
+});
+
+document.addEventListener('keypress', function onPress(event) {
+    if (event.key === 'F' && event.shiftKey === true) {
+        const fuse_cmd = getFuseCommand();
+        if (fuse_cmd.success) {
+            navigator.clipboard.writeText(fuse_cmd.command).then(function () {
+                hideSelected();
+                showToast('Copy successfully', false);
+            }, function (err) {
+                console.log(err);
+                showToast('Copy failed', true);
+            });
+        } else {
+            showToast(fuse_cmd.error_message, true);
+            return;
+        }
+    }
+});
+
+document.addEventListener('keypress', function onPress(event) {
+    if (event.key === 'S' && event.shiftKey === true) {
+        const sell_cmd = getSellCommand();
+        if (sell_cmd.success) {
+            navigator.clipboard.writeText(sell_cmd.command).then(function () {
+                hideSelected();
+                showToast('Copy successfully', false);
+            }, function (err) {
+                console.log(err);
+                showToast('Copy failed', true);
+            });
+        } else {
+            showToast(sell_cmd.error_message, true);
+            return;
+        }
     }
 });
 
@@ -512,13 +623,13 @@ table_sell_select_btn.addEventListener('click', function () {
         return;
     }
 
-    if (select_index.size == 0) {
-        showToast('You need to select at least 1 item');
+    const sell_cmd = getSellCommand();
+    if (sell_cmd.success) {
+        command_text.innerText = sell_cmd.command;
+    } else {
+        showToast(sell_cmd.error_message, true);
         return;
     }
-
-    const selected_ids = Array.from(select_index).map((idx) => csv[idx].id)
-    command_text.innerText = `$sell equipment ${selected_ids.join(',')}`;
 
     const modal = new bootstrap.Modal(command_modal);
     modal.show();
@@ -529,28 +640,13 @@ table_fuse_select_btn.addEventListener('click', function () {
         return;
     }
 
-    if (select_index.size != 2) {
-        if (select_index.size > 2) {
-            showToast('You can only select 2 items');
-        } else {
-            showToast('You need to select 2 items');
-        }
+    const fuse_cmd = getFuseCommand();
+    if (fuse_cmd.success) {
+        command_text.innerText = fuse_cmd.command;
+    } else {
+        showToast(fuse_cmd.error_message, true);
         return;
     }
-
-    const select_index_arr = Array.from(select_index);
-    const select_items = select_index_arr.map((idx) => csv[idx]);
-
-    if ((select_items[0].name != select_items[1].name) ||
-        (select_items[0].rarity != select_items[1].rarity) ||
-        (select_items[0].rank != select_items[1].rank) ||
-        (select_items[0].rank == '5')) {
-        showToast('Selected items can not be fused');
-        return;
-    }
-
-    const selected_ids = select_index_arr.map((idx) => csv[idx].id)
-    command_text.innerText = `$fuse item ${selected_ids.join(' ')}`;
 
     const modal = new bootstrap.Modal(command_modal);
     modal.show();
@@ -559,15 +655,11 @@ table_fuse_select_btn.addEventListener('click', function () {
 command_copy_btn.addEventListener('click', function () {
     navigator.clipboard.writeText(command_text.value).then(function () {
         if (command_auto_hide_checkbox.checked) {
-            const select_index_arr = Array.from(select_index);
-            for (let i = 0; i < select_index_arr.length; ++i) {
-                const hide_btn = document.getElementById(`item-${select_index_arr[i]}-hide-btn`);
-                hide_btn.click();
-            }
+            hideSelected();
         }
         command_close_btn.click();
     }, function (err) {
         console.log(err);
-        showToast('Copy failed');
+        showToast('Copy failed', true);
     });
 });
