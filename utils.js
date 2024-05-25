@@ -146,7 +146,6 @@ function showTable(data) {
     table_body = empty_tbody;
 
     data = sortTable(data);
-    // console.log(data);
 
     let cur_row_color = 'var(--bs-table-color)';
     let cur_row_bg = 'var(--bs-table-bg)';
@@ -344,6 +343,10 @@ document.addEventListener('keypress', function onPress(event) {
     if (event.key === 'Enter') {
         search_btn.click();
     }
+});
+
+csv_input.addEventListener('click', (event) => {
+    csv_input.value = '';  // reset
 });
 
 csv_input.addEventListener('change', (event) => {
