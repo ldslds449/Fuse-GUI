@@ -137,29 +137,6 @@ function sortTable(data) {
     return data;
 }
 
-function colorRows() {
-    let cur_row_color = 'var(--bs-table-color)';
-    let cur_row_bg = 'var(--bs-table-bg)';
-    let next_row_color = 'var(--bs-table-striped-color)';
-    let next_row_bg = 'var(--bs-table-striped-bg)';
-
-    let prev_name = '';
-    for (let i = 1, row; row = item_table.rows[i]; i++) {
-        const name = row.cells[1].firstChild.innerText;  // 1: specify
-
-        // set color
-        if (i > 1 && prev_name != name) {
-            [cur_row_color, cur_row_bg, next_row_color, next_row_bg] =
-                [next_row_color, next_row_bg, cur_row_color, cur_row_bg];
-        }
-        for (var j = 0, col; col = row.cells[j]; j++) {
-            col.style.backgroundColor = cur_row_bg;
-            col.style.color = cur_row_color;
-        }
-        prev_name = name;
-    }
-}
-
 function showTable(data) {
     let table_body = item_table.getElementsByTagName('tbody')[0];
 
@@ -170,6 +147,11 @@ function showTable(data) {
 
     data = sortTable(data);
 
+    let cur_row_color = 'var(--bs-table-color)';
+    let cur_row_bg = 'var(--bs-table-bg)';
+    let next_row_color = 'var(--bs-table-striped-color)';
+    let next_row_bg = 'var(--bs-table-striped-bg)';
+
     const createColumn = function (text) {
         let col = document.createElement('span');
         col.innerHTML = text;
@@ -178,11 +160,18 @@ function showTable(data) {
 
     const insertColumn = function (row, column) {
         let cell = row.insertCell();
+        cell.style.backgroundColor = cur_row_bg;
+        cell.style.color = cur_row_color;
         cell.appendChild(column);
     }
 
     for (let i = 0; i < data.length; ++i) {
         const row = table_body.insertRow();
+
+        if (i > 0 && data[i].name != data[i - 1].name) {
+            [cur_row_color, cur_row_bg, next_row_color, next_row_bg] =
+                [next_row_color, next_row_bg, cur_row_color, cur_row_bg];
+        }
 
         // id
         insertColumn(row, createColumn(data[i].id));
@@ -260,7 +249,7 @@ function showTable(data) {
                     target.innerHTML = selected_text;
                 }
                 select_btn.toggleAttribute('data-selected');
-                select_count_label.innerHTML = `Select count: ${select_index.size}`;
+                updateSelectValue();
             }
 
             const action_col_div = document.createElement('div');
@@ -278,10 +267,9 @@ function showTable(data) {
             hide_btn.onclick = function (e) {
                 hide_index.add(data[i].index);
                 select_index.delete(data[i].index);
-                table_body.removeChild(row);
-                hide_count_label.innerText = `Hide count: ${hide_index.size}`;
-                row_count_label.innerText = `Row count: ${data.length - hide_index.size}`;
-                colorRows();
+                updateSelectValue();
+                updateHideValue();
+                applyFilter();
             }
 
             const action_col_div = document.createElement('div');
@@ -293,11 +281,8 @@ function showTable(data) {
         insertColumn(row, action_container);
     }
 
-    // set row color
-    colorRows();
-
     // row count
-    row_count_label.innerHTML = `Row count: ${data.length}`;
+    updateRowValue();
 }
 
 function applyFilter() {
@@ -352,6 +337,22 @@ function showToast(message) {
     message_text.innerText = message;
     const toast = new bootstrap.Toast(message_toast);
     toast.show();
+}
+
+function updateRowValue() {
+    row_count_label.innerText = `Row count: ${table.length}`;
+}
+
+function updateSelectValue() {
+    select_count_label.innerText = `Select count: ${select_index.size}`;
+}
+
+function setSelectValue(val) {
+    select_count_label.innerText = `Select count: ${val}`;
+}
+
+function updateHideValue() {
+    hide_count_label.innerText = `Hide count: ${hide_index.size}`;
 }
 
 document.addEventListener('keypress', function onPress(event) {
@@ -425,7 +426,7 @@ search_btn.addEventListener('click', function () {
 
     // clear selected
     select_index.clear();
-    hide_count_label.innerText = `Hide count: 0`;
+    updateSelectValue();
 
     applyFilter();
 });
@@ -451,11 +452,12 @@ reset_btn.addEventListener('click', function () {
         select_rank_checkbox[i].checked = true;
     }
 
-    table_search_field.value = '';  // clear
-    select_index.clear();  // clear
+    // clear
+    table_search_field.value = '';
+    select_index.clear();
     hide_index.clear();
-
-    hide_count_label.innerText = `Hide count: 0`;
+    updateSelectValue();
+    updateHideValue();
 
     applyFilter();
 });
@@ -473,7 +475,7 @@ table_show_all_btn.addEventListener('click', function () {
     }
 
     hide_index.clear();
-    hide_count_label.innerText = 'Hide count: 0';
+    updateHideValue();
     applyFilter();
 });
 
@@ -488,7 +490,7 @@ table_select_all_btn.addEventListener('click', function () {
             btn.click();
         }
     }
-    select_count_label.innerHTML = `Select count: ${table.length}`;
+    setSelectValue(table.length);
 });
 
 table_delete_all_btn.addEventListener('click', function () {
@@ -502,7 +504,7 @@ table_delete_all_btn.addEventListener('click', function () {
             btn.click();
         }
     }
-    select_count_label.innerHTML = `Select count: 0`;
+    setSelectValue(0);
 });
 
 table_sell_select_btn.addEventListener('click', function () {
