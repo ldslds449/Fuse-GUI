@@ -340,6 +340,12 @@ function showToast(message) {
     toast.show();
 }
 
+document.addEventListener('keypress', function onPress(event) {
+    if (event.key === 'Enter') {
+        search_btn.click();
+    }
+});
+
 csv_input.addEventListener('change', (event) => {
     const file = event.target.files[0];
 
