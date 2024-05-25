@@ -16,7 +16,7 @@
     --c-color: #ffdf6a;
     --d-color: #a0ff9d;
     --e-color: #91e9ff;
-    --f-color: #c38fff;
+    --f-color: #d8b3ff;
 
     --rank-1-color: hsl(from var(--e-color) calc(h + 30) 70% l);
     --rank-2-color: hsl(from var(--d-color) calc(h + 30) 70% l);
