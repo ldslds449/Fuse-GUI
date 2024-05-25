@@ -137,6 +137,29 @@ function sortTable(data) {
     return data;
 }
 
+function colorRows() {
+    let cur_row_color = 'var(--bs-table-color)';
+    let cur_row_bg = 'var(--bs-table-bg)';
+    let next_row_color = 'var(--bs-table-striped-color)';
+    let next_row_bg = 'var(--bs-table-striped-bg)';
+
+    let prev_name = '';
+    for (let i = 1, row; row = item_table.rows[i]; i++) {
+        const name = row.cells[1].firstChild.innerText;  // 1: specify
+
+        // set color
+        if (i > 1 && prev_name != name) {
+            [cur_row_color, cur_row_bg, next_row_color, next_row_bg] =
+                [next_row_color, next_row_bg, cur_row_color, cur_row_bg];
+        }
+        for (var j = 0, col; col = row.cells[j]; j++) {
+            col.style.backgroundColor = cur_row_bg;
+            col.style.color = cur_row_color;
+        }
+        prev_name = name;
+    }
+}
+
 function showTable(data) {
     let table_body = item_table.getElementsByTagName('tbody')[0];
 
@@ -147,11 +170,6 @@ function showTable(data) {
 
     data = sortTable(data);
 
-    let cur_row_color = 'var(--bs-table-color)';
-    let cur_row_bg = 'var(--bs-table-bg)';
-    let next_row_color = 'var(--bs-table-striped-color)';
-    let next_row_bg = 'var(--bs-table-striped-bg)';
-
     const createColumn = function (text) {
         let col = document.createElement('span');
         col.innerHTML = text;
@@ -160,17 +178,10 @@ function showTable(data) {
 
     const insertColumn = function (row, column) {
         let cell = row.insertCell();
-        cell.style.backgroundColor = cur_row_bg;
-        cell.style.color = cur_row_color;
         cell.appendChild(column);
     }
 
     for (let i = 0; i < data.length; ++i) {
-        if (i > 0 && data[i].name != data[i - 1].name) {
-            [cur_row_color, cur_row_bg, next_row_color, next_row_bg] =
-                [next_row_color, next_row_bg, cur_row_color, cur_row_bg];
-        }
-
         const row = table_body.insertRow();
 
         // id
@@ -270,6 +281,7 @@ function showTable(data) {
                 table_body.removeChild(row);
                 hide_count_label.innerText = `Hide count: ${hide_index.size}`;
                 row_count_label.innerText = `Row count: ${data.length - hide_index.size}`;
+                colorRows();
             }
 
             const action_col_div = document.createElement('div');
@@ -280,6 +292,9 @@ function showTable(data) {
         action_container.appendChild(action_row_div);
         insertColumn(row, action_container);
     }
+
+    // set row color
+    colorRows();
 
     // row count
     row_count_label.innerHTML = `Row count: ${data.length}`;
