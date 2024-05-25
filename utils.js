@@ -413,8 +413,8 @@ csv_input.addEventListener('change', (event) => {
 
         window.csv = csv;
 
-        // draw table
-        applyFilter();
+        // reset all filters
+        reset_btn.click();
     };
     reader.readAsText(file);
 });
