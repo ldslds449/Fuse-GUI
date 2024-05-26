@@ -112,9 +112,6 @@ function sortTable(data) {
         if (a.rank != b.rank) {
             return parseInt(b.rank) - parseInt(a.rank);
         }
-        if (a.level != b.level) {
-            return parseInt(b.level) - parseInt(a.level);
-        }
 
         let sum_a = 0, sum_b = 0;
         for (let i = 0; i < select_stats_checkbox.length; ++i) {
@@ -188,9 +185,6 @@ function showTable(data) {
         let rank_col = createColumn(data[i].rank);
         rank_col.style.color = `var(--rank-${data[i].rank}-color)`;
         insertColumn(row, rank_col);
-
-        // level
-        insertColumn(row, createColumn(data[i].level));
 
         // stats
         const stats = data[i].stats;
