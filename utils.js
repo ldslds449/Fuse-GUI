@@ -435,7 +435,9 @@ document.addEventListener('keypress', function onPress(event) {
         const fuse_cmd = getFuseCommand();
         if (fuse_cmd.success) {
             navigator.clipboard.writeText(fuse_cmd.command).then(function () {
-                hideSelected();
+                if (command_auto_hide_checkbox.checked) {
+                    hideSelected();
+                }
                 showToast('Copy successfully', false);
             }, function (err) {
                 console.log(err);
@@ -453,7 +455,9 @@ document.addEventListener('keypress', function onPress(event) {
         const sell_cmd = getSellCommand();
         if (sell_cmd.success) {
             navigator.clipboard.writeText(sell_cmd.command).then(function () {
-                hideSelected();
+                if (command_auto_hide_checkbox.checked) {
+                    hideSelected();
+                }
                 showToast('Copy successfully', false);
             }, function (err) {
                 console.log(err);
