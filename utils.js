@@ -68,6 +68,125 @@ const STATS_INFO = {
     'DEX': 4,
 };
 
+const BIS = {
+    'A': {},
+    'B': {},
+    'C': {
+        'draconic-skeletal': 1,
+        'lionhide-cape': 1,
+        'soul-crown': 1,
+        'soul-cuirass': 1,
+        'warlords-helmet': 1,
+        'warlords-vest': 1,
+        'lion-helm': 1,
+        'titanium-helmet': 1,
+        'abyssal-dagger': 1,
+        'durandal': 1,
+        'gramr': 1,
+
+        'twilight-chestplate': 2,
+        'twilight-mantle': 2,
+        'harpe': 2,
+        'eclipse-staff': 2,
+        'corrupted-crown': 2,
+        'corrupted-chestpiece': 2,
+
+        'abysal-staff': 3,
+        'gilded-helm': 3,
+        'titanium-battleplate': 3,
+        'vanquishers-crown': 3,
+        'vanquishers-cuirass': 3,
+        'void-cape': 3,
+        'void-helm': 3,
+
+        'destroyers-armor': 4,
+        'godstaff': 4,
+
+        'abyssal-staff': 5,
+        'brutality-armor': 5,
+        'brutality-helm': 5,
+        'dragon-fang': 5,
+        'excalibur': 5,
+        'worldshaper': 5,
+
+    },
+    'D': {
+        'frozen-breastplate': 1,
+        'infernal-armor': 1,
+        'shadowsteel-helm': 1,
+        'skeletal-shortbow': 1,
+
+        'ancient-cuirass': 2,
+        'crimson-warglaive': 2,
+        'dragonheart-helm': 2,
+        'ghost-reaver': 2,
+
+        'voidsteel-helm': 3,
+
+        'abyssal-armor': 4,
+        'skeletal-razor': 4,
+        'vengeance-helm': 4,
+
+        'ironbane-visor': 5,
+        'silk-raiment': 5,
+
+    },
+    'E': {
+        'elderwood-staff': 1,
+        'mithril-chestplate': 1,
+
+        'viking-helm': 2,
+
+        'bloody-sabre': 3,
+        'warrior-helm': 3,
+
+        'steel-armor': 4,
+
+        'ivory-chestplate': 5,
+        'solitudes-tunic': 5,
+        'warbringer-helm': 5,
+
+    },
+    'F': {
+        'bone-dagger': 1,
+        'leather-coat': 1,
+        'plainsteel-helm': 1,
+        'tattered-tunic': 1,
+        'wooden-helm': 1,
+
+        'ironclad-helm': 2,
+        'basic-sword': 2,
+        'blunt-sword': 2,
+        'bronze-dagger': 2,
+        'cheap-wand': 2,
+        'dull-blade': 2,
+        'iron-armor': 2,
+        'leather-cap': 2,
+        'steel-helm': 2,
+        'tattered-robe': 2,
+        'wood-staff': 2,
+        
+        'beginner-armor': 3,
+        'beginner-robe': 3,
+        'iron-staff': 3,
+        'knight-helm': 3,
+        'rusted-helm': 3,
+
+        'cloth-tunic': 4,
+        'iron-helm': 4,
+        'protective-helm': 4,
+        'rusty-chainmail': 4,
+
+        'apprentice-staff': 5,
+        'beginner-helm': 5,
+        'guard-helm': 5,
+        'leather-chestplate': 5,
+        'rusty-breastplate': 5,
+        'stick': 5,
+
+    }
+};
+
 var csv;  // original csv data
 var table;  // csv data after filtering
 var select_index = new Set();  // index location in csv data
@@ -211,6 +330,13 @@ function showTable(data) {
             stats_container.appendChild(stats_col);
         }
         insertColumn(row, stats_container);
+
+        // BIS
+        let bis_val = BIS[data[i].rarity][data[i].name];
+        bis_val = bis_val == undefined ? '' : String(bis_val); bis_val
+        let bis_col = createColumn(bis_val);
+        bis_col.style.color = `var(--bis-${bis_val}-color)`;
+        insertColumn(row, bis_col);
 
         // action
         const action_container = document.createElement('div');
