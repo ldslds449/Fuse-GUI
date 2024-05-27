@@ -151,7 +151,8 @@ function showTable(data) {
 
     const createColumn = function (text) {
         let col = document.createElement('span');
-        col.innerHTML = text;
+        col.style.display = 'inline';
+        col.innerText = text;
         return col;
     };
 
@@ -315,7 +316,7 @@ function applyFilter() {
         if (!select_rank_checkbox[item_rank - 1].checked) return false;
 
         // name
-        const target_pattern = table_search_field.value;
+        const target_pattern = table_search_field.value.trim();
         if (target_pattern.length > 0 && row.name.indexOf(target_pattern) == -1) return false;
 
         // hide
