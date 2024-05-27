@@ -316,8 +316,8 @@ function applyFilter() {
         if (!select_rank_checkbox[item_rank - 1].checked) return false;
 
         // name
-        const target_pattern = table_search_field.value.trim();
-        if (target_pattern.length > 0 && row.name.indexOf(target_pattern) == -1) return false;
+        const target_pattern = table_search_field.value.trim().toLowerCase();
+        if (target_pattern.length > 0 && row.name.toLowerCase().indexOf(target_pattern) == -1) return false;
 
         // hide
         if (hide_index.has(row.index)) return false;
