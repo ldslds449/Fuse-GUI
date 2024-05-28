@@ -134,17 +134,41 @@ const BIS = {
     'E': {
         'elderwood-staff': 1,
         'mithril-chestplate': 1,
+        'steel-sword': 1,
+        'warped-fang': 1,
+        'bronze-helm': 1,
+        'infernal-armor': 1,
+        'ivory-vest': 1,
+        'mithril-chestplate': 1,
 
         'viking-helm': 2,
+        'obsidian-armor': 2,
+        'gladiator-helm': 2,
+        'heavy-crossbow': 2,
+        'steel-dagger': 2,
 
         'bloody-sabre': 3,
+        'cardinal-armor': 3,
+        'woodland-armor': 3,
+        'samurai-helm': 3,
+        'spartan-helm': 3,
         'warrior-helm': 3,
+        'ancient-greatstaff': 3,
+        'infected-scalpel': 3,
 
         'steel-armor': 4,
+        'briarwood-staff': 4,
+        'oak-longbow': 4,
+        'bladewind-mask': 4,
+        'barbarian-helm': 4,
+        'loyal-scaled-tunic': 4,
 
         'ivory-chestplate': 5,
         'solitudes-tunic': 5,
         'warbringer-helm': 5,
+        'bronzed-cuirass': 5,
+        'elderwood-armor': 5,
+        'nightfall-visor': 5,
 
     },
     'F': {
