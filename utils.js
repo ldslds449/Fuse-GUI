@@ -113,22 +113,40 @@ const BIS = {
     'D': {
         'frozen-breastplate': 1,
         'infernal-armor': 1,
-        'shadowsteel-helm': 1,
         'skeletal-shortbow': 1,
+        'peacekeeper-vest': 1,
+        'celestial-helm': 1,
+        'grimdark-helm': 1,
+        'cosmic-staff': 1,
+        'warp-edge': 1,
 
         'ancient-cuirass': 2,
         'crimson-warglaive': 2,
         'dragonheart-helm': 2,
         'ghost-reaver': 2,
+        'dragonslayer-armor': 2,
+        'mythril-chestplate': 2,
+        'obsidian-armor': 2,
+        'bloodmoon-helm': 2,
+        'ember-helm': 2,
+        'chaos-impaler': 2,
+        'gold-spellblade': 2,
 
         'voidsteel-helm': 3,
+        'devil-sting': 3,
+        'frostbite-helm': 3,
+        'golden-cuirass': 3,
 
         'abyssal-armor': 4,
         'skeletal-razor': 4,
         'vengeance-helm': 4,
+        'shadowsteel-helm': 4,
 
         'ironbane-visor': 5,
         'silk-raiment': 5,
+        'savage-reaver': 5,
+        'runic-armor': 5,
+        'gladiator-robe': 5,
 
     },
     'E': {
