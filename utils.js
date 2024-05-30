@@ -338,6 +338,9 @@ class Stats {
 
 function sortTable(data) {
     data.sort(function (a, b) {
+        if (a.bis != b.bis) {
+            return a.bis - b.bis;
+        }
         if (a.name != b.name) {
             return a.name.localeCompare(b.name);
         }
@@ -364,6 +367,7 @@ function sortTable(data) {
                 }
             }
         }
+
         return parseInt(a.id) - parseInt(b.id);
     });
     return data;
@@ -562,8 +566,7 @@ function applyFilter() {
         if (target_pattern.length > 0 && row.name.toLowerCase().indexOf(target_pattern) == -1) return false;
 
         // BIS
-        const item_bis = BIS[row.rarity[0]][row.name.toLowerCase()];
-        if (!select_bis_checkbox[item_bis - 1].checked) return false;
+        if (!select_bis_checkbox[row.bis - 1].checked) return false;
 
         // hide
         if (hide_index.has(row.index)) return false;
@@ -759,6 +762,7 @@ csv_input.addEventListener('change', (event) => {
                 now += 1;
             }
             element.index = i - 1;
+            element.bis = BIS[element.rarity[0]][element.name.toLowerCase()];
             csv.push(element);
         }
 
