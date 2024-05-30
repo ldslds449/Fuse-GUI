@@ -69,8 +69,75 @@ const STATS_INFO = {
 };
 
 const BIS = {
-    'A': {},
-    'B': {},
+    'A': {
+        'dawnbow': 1,
+        'galactic-tempest': 1,
+        'mythrend': 1,
+        'eldritch-helm': 1,
+        'kagekabuto': 1,
+        'mystshade': 1,
+        'frostheart': 1,
+        'phantom-mantle': 1,
+        'storm-bulwark': 1,
+
+        'duskbow': 2,
+        'etherstorm': 2,
+        'rift-cleaver': 2,
+        'royal-ordinance': 2,
+        'starquake': 2,
+        'doomguard-helmet': 2,
+        'firecap': 2,
+        'hellmet': 2,
+        'shadowcrest': 2,
+        'celestium-shell': 2,
+        'nebula-mail': 2,
+        'starshield': 2,
+        'subzero-mail': 2,
+
+        'celestial-decree': 3,
+        'aquavisor': 3,
+        'divine-helm': 3,
+        'earthcrown': 3,
+        'arachnoplate': 3,
+        'regalplate': 3,
+        'whisper-shell': 3,
+
+        'nebulawrath': 4,
+        
+    },
+    'B': {
+        'dragonplate': 1,
+        'titanplate': 1,
+        'regalith': 1,
+        'valtarius': 1,
+        'candycane': 1,
+        'shadowstrike': 1,
+        'twig': 1,
+
+        'voidwalker-robe': 2,
+        'malevolith': 2,
+        
+        'elemental-ward': 3,
+        'frostforged-plate': 3,
+        'necrotic-shell': 3,
+        'ignis': 3,
+        'nicht': 3,
+        'mjolnir': 3,
+        'soulrender': 3,
+        'zantetsuken': 3,
+        'olympian-helm': 3,
+        
+        'eldritch-robe': 4,
+        'phoenix-mail': 4,
+        'valkyrie-plate': 4,
+        'phoenix-helm': 4,
+        'underworld-crown': 4,
+        'dragons-breath': 4,
+        'starfall': 4,
+        'voidcaller': 4,
+        'frostbite': 4,
+
+    },
     'C': {
         'draconic-skeletal': 1,
         'lionhide-cape': 1,
