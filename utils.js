@@ -60,6 +60,13 @@ const select_rank_4 = document.getElementById('select-rank-4');
 const select_rank_5 = document.getElementById('select-rank-5');
 const select_rank_checkbox = [select_rank_1, select_rank_2, select_rank_3, select_rank_4, select_rank_5];
 
+const select_bis_1 = document.getElementById('select-bis-1');
+const select_bis_2 = document.getElementById('select-bis-2');
+const select_bis_3 = document.getElementById('select-bis-3');
+const select_bis_4 = document.getElementById('select-bis-4');
+const select_bis_5 = document.getElementById('select-bis-5');
+const select_bis_checkbox = [select_bis_1, select_bis_2, select_bis_3, select_bis_4, select_bis_5];
+
 const STATS_INFO = {
     'HP': 0,
     'DEF': 1,
@@ -553,6 +560,10 @@ function applyFilter() {
         // name
         const target_pattern = table_search_field.value.trim().toLowerCase();
         if (target_pattern.length > 0 && row.name.toLowerCase().indexOf(target_pattern) == -1) return false;
+
+        // BIS
+        const item_bis = BIS[row.rarity[0]][row.name.toLowerCase()];
+        if (!select_bis_checkbox[item_bis - 1].checked) return false;
 
         // hide
         if (hide_index.has(row.index)) return false;
