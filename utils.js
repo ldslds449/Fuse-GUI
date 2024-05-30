@@ -808,6 +808,10 @@ reset_btn.addEventListener('click', function () {
         select_rank_checkbox[i].checked = true;
     }
 
+    for (let i = 0; i < select_bis_checkbox.length; ++i) {
+        select_bis_checkbox[i].checked = true;
+    }
+
     // clear
     table_search_field.value = '';
     select_index.clear();
