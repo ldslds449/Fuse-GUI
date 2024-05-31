@@ -406,7 +406,16 @@ function showTable(data) {
         insertColumn(row, createColumn(data[i].id));
 
         // name
-        insertColumn(row, createColumn(data[i].name));
+        const name_col = createColumn(data[i].name);
+        name_col.addEventListener('dblclick', (e) => {
+            navigator.clipboard.writeText(data[i].name).then(function () {
+                showToast('Copy successfully', false);
+            }, function (err) {
+                console.log(err);
+                showToast('Copy failed', true);
+            });
+        });
+        insertColumn(row, name_col);
 
         // rarity
         let rarity_col = createColumn(data[i].rarity);
