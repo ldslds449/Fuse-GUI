@@ -115,6 +115,7 @@ const BIS = {
 
         'voidwalker-robe': 2,
         'malevolith': 2,
+        'starforged': 2,
 
         'elemental-ward': 3,
         'frostforged-plate': 3,
@@ -339,6 +340,7 @@ const Type = {
         'starfall': 'Weapon',
         'voidcaller': 'Weapon',
         'frostbite': 'Weapon',
+        'starforged': 'Weapon',
         'regalith': 'Helmet',
         'valtarius': 'Helmet',
         'malevolith': 'Helmet',
@@ -617,7 +619,7 @@ function showTable(data) {
         insertColumn(row, name_col);
 
         // type
-        insertColumn(row, createColumn(data[i].type[0]));
+        insertColumn(row, createColumn(data[i].type != undefined ? data[i].type[0] : ''));
 
         // rarity
         let rarity_col = createColumn(data[i].rarity);
@@ -769,7 +771,9 @@ function applyFilter() {
         if (target_pattern.length > 0 && row.name.toLowerCase().indexOf(target_pattern) == -1) return false;
 
         // BIS
-        if (!select_bis_checkbox[row.bis - 1].checked) return false;
+        if (row.bis != undefined) {
+            if (!select_bis_checkbox[row.bis - 1].checked) return false;
+        }
 
         // hide
         if (hide_index.has(row.index)) return false;
