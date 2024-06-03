@@ -888,7 +888,7 @@ document.addEventListener('keypress', function onPress(event) {
 });
 
 document.addEventListener('keypress', function onPress(event) {
-    if (event.key === 'F' && event.shiftKey === true) {
+    if (event.key === 'F') {
         const fuse_cmd = getFuseCommand();
         if (fuse_cmd.success) {
             navigator.clipboard.writeText(fuse_cmd.command).then(function () {
@@ -908,7 +908,7 @@ document.addEventListener('keypress', function onPress(event) {
 });
 
 document.addEventListener('keypress', function onPress(event) {
-    if (event.key === 'S' && event.shiftKey === true) {
+    if (event.key === 'S') {
         const sell_cmd = getSellCommand();
         if (sell_cmd.success) {
             navigator.clipboard.writeText(sell_cmd.command).then(function () {
