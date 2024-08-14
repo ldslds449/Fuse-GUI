@@ -37,13 +37,14 @@ const stats_count_relation = document.getElementById('stats-count-relation');
 const stats_min = document.getElementById('stats-min');
 const stats_max = document.getElementById('stats-max');
 
+const select_s = document.getElementById('select-s');
 const select_a = document.getElementById('select-a');
 const select_b = document.getElementById('select-b');
 const select_c = document.getElementById('select-c');
 const select_d = document.getElementById('select-d');
 const select_e = document.getElementById('select-e');
 const select_f = document.getElementById('select-f');
-const select_rarity_checkbox = [select_a, select_b, select_c, select_d, select_e, select_f];
+const select_rarity_checkbox = [select_s, select_a, select_b, select_c, select_d, select_e, select_f];
 
 const select_rank_1 = document.getElementById('select-rank-1');
 const select_rank_2 = document.getElementById('select-rank-2');
@@ -67,7 +68,20 @@ const STATS_INFO = {
     'DEX': 4,
 };
 
+const RARITY_ORDER = {
+    'S': 0,
+    'A': 1,
+    'B': 2,
+    'C': 3,
+    'D': 4,
+    'E': 5,
+    'F': 6,
+}
+
 const BIS = {
+    'S': {
+        'sword-of-life': 2,
+    },
     'A': {
         'dawnbow': 1,
         'galactic-tempest': 1,
@@ -297,6 +311,9 @@ const BIS = {
 };
 
 const Type = {
+    'S': {
+        'sword-of-life': 'Weapon',
+    },
     'A': {
         'dawnbow': 'Weapon',
         'galactic-tempest': 'Weapon',
@@ -538,7 +555,7 @@ function sortTable(data) {
             return a.name.localeCompare(b.name);
         }
         if (a.rarity != b.rarity) {
-            return a.rarity.localeCompare(b.rarity);
+            return RARITY_ORDER[b.rarity] - RARITY_ORDER[a.rarity]; 
         }
         if (a.rank != b.rank) {
             return parseInt(b.rank) - parseInt(a.rank);
@@ -759,7 +776,7 @@ function applyFilter() {
         }
 
         // rarity
-        const item_rarity = row.rarity.charCodeAt(0) - 'A'.charCodeAt(0);
+        const item_rarity = RARITY_ORDER[row.rarity];
         if (!select_rarity_checkbox[item_rarity].checked) return false;
 
         // rank
