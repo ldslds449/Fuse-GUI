@@ -81,6 +81,9 @@ const RARITY_ORDER = {
 const BIS = {
     'S': {
         'sword-of-life': 2,
+        'endblade': 2,
+        'pyroclasm': -1,
+        'toxinium': -1,
     },
     'A': {
         'dawnbow': 1,
@@ -313,6 +316,9 @@ const BIS = {
 const Type = {
     'S': {
         'sword-of-life': 'Weapon',
+        'endblade': 'Weapon',
+        'pyroclasm': '',
+        'toxinium': '',
     },
     'A': {
         'dawnbow': 'Weapon',
